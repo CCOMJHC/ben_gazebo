@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="pano_array_gazebo" params="name update_rate:=5">
+
+    <xacro:include filename="$(find ben_gazebo)/urdf/sensors/pano_camera.xacro" />
+
+    <xacro:macro name="loop" params="i">
+      <xacro:pano_camera_gazebo name="${name}" number="${i}"/>
+      <xacro:if value="${i}">
+        <xacro:loop i="${i-1}" />
+      </xacro:if>
+    </xacro:macro>
+
+    <xacro:loop i="5" />
+
+  </xacro:macro>
+</robot>

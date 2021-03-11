@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="oem_gps_gazebo" params="name:=gps update_rate:=5">
+    <gazebo reference="${namespace}/${name}">
+      <sensor type="gps" name="${namespace}/${name}_gps">
+        <plugin name="gps_plugin_${name}" filename="libgazebo_ros_mru.so">
+          <positionTopic>${namespace}/${sensor_namespace}${name}/position</positionTopic>
+          <velocityTopic>${namespace}/${sensor_namespace}${name}/velocity</velocityTopic>
+          <frameId>${namespace}/${name}</frameId>
+        </plugin>         
+        <updateRate>${update_rate}</updateRate>
+        <alwaysOn>true</alwaysOn>
+        <gps>
+          <position_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.5</bias_mean>
+                <bias_stddev>0.01</bias_stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.75</bias_mean>
+                <bias_stddev>0.01</bias_stddev>
+              </noise>
+            </vertical>
+          </position_sensing>
+          <velocity_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </vertical>
+          </velocity_sensing>
+        </gps>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>
+
+

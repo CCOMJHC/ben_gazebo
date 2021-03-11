@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="ben_lidar_gazebo" params="name
+                                            update_rate:=10 vertical_lasers:=16 samples:=1875 resolution:=0.1
+                                            min_angle:=${-pi} max_angle:=${pi}
+                                            min_vertical_angle:=${-pi/12} max_vertical_angle:=${pi/12}
+                                            max_range:=130 noise_stddev:=0.01">
+
+    <gazebo reference="${namespace}/${name}">
+      <sensor type="gpu_ray" name="${name}_sensor">
+        <update_rate>${update_rate}</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${samples/resolution}</samples>
+              <resolution>${resolution}</resolution>
+              <min_angle>${min_angle}</min_angle>
+              <max_angle>${max_angle}</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>${vertical_lasers}</samples>
+              <resolution>1</resolution>
+              <min_angle>${min_vertical_angle}</min_angle>
+              <max_angle>${max_vertical_angle}</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>${max_range}</max>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>${noise_stddev}</stddev>
+          </noise>
+        </ray>
+        <plugin name="${name}_plugin" filename="libgazebo_ros_velodyne_gpu_laser.so">
+          <topicName>${namespace}/${sensor_namespace}${name}/points</topicName>
+          <frameName>${namespace}/${name}</frameName>
+          <min_intensity>0</min_intensity>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+  
+  
+</robot>

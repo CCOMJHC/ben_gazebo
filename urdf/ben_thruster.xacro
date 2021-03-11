@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find ben_description)/urdf/jetdrive.xacro" />
+  <xacro:engine prefix="${namespace}/" position="-2.15 0.0 -0.3" />
+  <gazebo>
+    <plugin name="ben_gazebo_thrust" filename="libusv_gazebo_thrust_plugin.so">
+      <cmdTimeout>1.0</cmdTimeout>
+      <robotNamespace>${namespace}</robotNamespace>
+        <thruster>
+          <!-- Required Parameters -->
+          <linkName>${namespace}/propeller_link</linkName>
+          <propJointName>${namespace}/engine_propeller_joint</propJointName>
+          <engineJointName>${namespace}/chasis_engine_joint</engineJointName>
+          <cmdTopic>${thruster_namespace}throttle</cmdTopic>
+          <angleTopic>${thruster_namespace}rudder</angleTopic>
+          <enableAngle>1</enableAngle>
+
+          <!-- Optional Parameters -->
+          <mappingType>0</mappingType>
+          <maxCmd>1.0</maxCmd>
+          <maxForceFwd>1800.0</maxForceFwd>
+          <maxForceRev>-500.0</maxForceRev>
+          <maxAngle>${radians(33)}</maxAngle>
+        </thruster>
+    </plugin>
+  </gazebo>
+</robot>
+

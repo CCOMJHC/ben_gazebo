@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="oem_heading_sensor_gazebo" params="name:=heading update_rate:=5">
+    <gazebo reference="${namespace}/${name}">
+      <sensor type="imu" name="${namespace}/${name}">
+        <always_on>1</always_on>
+        <update_rate>${update_rate}</update_rate>
+        <plugin name="heading_sensor_plugin_${name}" filename="libgazebo_ros_imu_sensor.so">
+          <topicName>${namespace}/${sensor_namespace}heading</topicName>
+          <frameName>${namespace}/${name}</frameName>
+          <updateRateHZ>${update_rate}</updateRateHZ>
+          <gaussianNoise>0.01</gaussianNoise>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>
