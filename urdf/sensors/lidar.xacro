@@ -36,7 +36,7 @@
           </noise>
         </ray>
         <plugin name="${name}_plugin" filename="libgazebo_ros_velodyne_gpu_laser.so">
-          <topicName>${namespace}/${sensor_namespace}${name}/points</topicName>
+          <topicName>${namespace}/${sensor_namespace}${name}/velodyne_points</topicName>
           <frameName>${namespace}/${name}</frameName>
           <min_intensity>0</min_intensity>
         </plugin>
