@@ -5,7 +5,7 @@
     <xacro:include filename="$(find ben_gazebo)/urdf/sensors/pano_camera.xacro" />
 
     <xacro:macro name="loop" params="i">
-      <xacro:pano_camera_gazebo name="${name}" number="${i}"/>
+      <xacro:pano_camera_gazebo name="${name}" number="${i+1}"/>
       <xacro:if value="${i}">
         <xacro:loop i="${i-1}" />
       </xacro:if>
